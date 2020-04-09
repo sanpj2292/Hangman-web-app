@@ -1,0 +1,10 @@
+.App {
+  text-align: center;
+  width: 90vw;
+}
+
+.key-container {
+  padding: 16px 8px;
+  width: 30%;
+  background-color: burlywood;
+}
