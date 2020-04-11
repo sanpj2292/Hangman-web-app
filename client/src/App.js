@@ -3,19 +3,28 @@ import './App.css';
 import Keys from './components/keys/keys';
 import { AppContext } from './contexts/context-provider';
 import DisplayWord from './components/display-word/display-word';
+import axios from "axios";
 
 function App() {
-  const { keys, displayWord, setWord, checkAndSetChar } = useContext(AppContext);
+  const { keys, displayWord, details, setDetails, checkAndSetChar } = useContext(AppContext);
 
   // componentDidMount
   useEffect(() => {
     // Words API
-    setTimeout(() => setWord('sankeerth'), 2000);
-  }, [setWord])
+    async function getWordMeanPOS() {
+      try {
+        const response = await axios.get('/api/detail/collins/generate');
+        const wordMeanPos = response.data;
+        // set into context
+        setDetails({ ...wordMeanPos });
+      } catch (error) {
+        throw new Error(error.stack);
+      }
+    }
+    getWordMeanPOS()
+  }, [setDetails])
 
   const onKeyUpHandler = e => {
-    console.log(`Display Word Index: ${displayWord.indexOf(e.key)}`);
-    console.log(`Condition: ${keys[e.key] && displayWord.indexOf(e.key) === -1}`)
     if (keys[e.key] && displayWord.indexOf(e.key) === -1) {
       checkAndSetChar(e.key);
     }
@@ -23,12 +32,12 @@ function App() {
 
   return (
     <div className="App">
-      <div className='container'>
-        <div className='container'>
+      <div className='d-flex flex-wrap justify-content-center'>
+        <div className='container d-flex flex-wrap justify-content-center'>
           <DisplayWord />
         </div>
         <div tabIndex={-1}
-          className='key-container d-flex flex-wrap p-2 justify-content-start'
+          className='key-container d-flex flex-wrap'
           onKeyUp={onKeyUpHandler}>
           <Keys keyList={Object.keys(keys)}></Keys>
         </div>

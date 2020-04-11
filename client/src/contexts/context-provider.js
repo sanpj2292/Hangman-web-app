@@ -5,13 +5,24 @@ const INIT_KEYS_MAP = getInitKeysMap();
 
 export const AppContext = createContext({
     keys: INIT_KEYS_MAP,
-    displayWord: null
+    displayWord: null,
+    details: {
+        word: '',
+        meaning: '',
+        pos: ''
+    }
 });
 
 const AppContextProvider = ({ children }) => {
     const [keys, setKeys] = useState(INIT_KEYS_MAP);
-    const [word, setWord] = useState('');
+    const [details, setDetails] = useState({
+        word: '',
+        meaning: '',
+        pos: ''
+    });
     const [displayWord, setDisplayWord] = useState('');
+
+    const { word } = details;
 
     const wrongKey = (key) => setKeys(setWrongKey(keys, key));
     const rightKey = (key) => setKeys(setRightKey(keys, key));
@@ -35,7 +46,7 @@ const AppContextProvider = ({ children }) => {
     }, [word]);
 
     return (
-        <AppContext.Provider value={{ keys, wrongKey, rightKey, displayWord, setWord, checkAndSetChar }}>
+        <AppContext.Provider value={{ keys, wrongKey, rightKey, displayWord, checkAndSetChar, setDetails, details, setDisplayWord }}>
             {children}
         </AppContext.Provider>
     );

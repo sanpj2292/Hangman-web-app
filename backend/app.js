@@ -49,7 +49,6 @@ app.emit('initialize');
 // Custom Middleware
 app.use((req, res, next) => {
     console.log('Middleware called');
-    console.log(words);
     req.words = words;
     next();
 });

@@ -47,7 +47,7 @@ router.get('/', async (req, res) => {
 
 async function getWordMeaningPOSFromCollins(words) {
     try {
-        const genWord = generateWord(words, 2);
+        const genWord = generateWord(words, 4);
         const wordMeanPos = await getCollinsDicPOSMeaningContent(genWord, 2);
         const { meaning, pos } = wordMeanPos;
         if (meaning.length === 0 || pos.length === 0) {
