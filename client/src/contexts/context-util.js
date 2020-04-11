@@ -42,6 +42,6 @@ const getMatchIndexes = (word, char) => {
 export const replaceWithMatchingChar = (displayWord, refWord, char) => {
     const matchIndexes = getMatchIndexes(refWord, char);
     const _dispArr = Array.from(displayWord);
-    matchIndexes.forEach(i => _dispArr[i] = char);
+    matchIndexes.forEach(i => _dispArr[i] = char.toUpperCase());
     return _dispArr.join('');
 }
