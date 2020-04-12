@@ -1,10 +1,30 @@
 .App {
   text-align: center;
   width: 90vw;
+  padding: 2rem;
 }
 
 .key-container {
   padding: 16px 8px;
-  width: 30%;
+  width: 60%;
   background-color: burlywood;
+  border: 1px gainsboro solid;
+}
+
+@media screen and (min-width: 800px) {
+  .key-container {
+    padding: 16px 8px;
+    width: 40%;
+    background-color: honeydew;
+    border: 1px gainsboro solid;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .key-container {
+    padding: 2px 2px;
+    width: 100%;
+    background-color: peachpuff;
+    border: 1px gainsboro solid;
+  }
 }

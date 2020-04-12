@@ -1,5 +1,6 @@
 import React, { Fragment, useContext } from 'react';
 import { AppContext } from '../../contexts/context-provider';
+import './keys.styles.css'
 
 const Keys = ({ keyList }) => {
     const { keys } = useContext(AppContext);
@@ -9,7 +10,7 @@ const Keys = ({ keyList }) => {
                 keyList.map((k, ind) => {
                     const { key, init, wrong } = keys[k];
                     return (
-                        <div key={`btn-container-${ind}`} className='mt-1 ml-1'>
+                        <div key={`btn-container-${ind}`} className='btn-overlay mt-1'>
                             <button
                                 key={`char-key-${ind}`}
                                 tabIndex={ind}

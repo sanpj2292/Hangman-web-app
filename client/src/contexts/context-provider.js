@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { setWrongKey, getInitKeysMap, setRightKey, initializeDisplayWord, replaceWithMatchingChar } from './context-util';
+import axios from 'axios';
 
 const INIT_KEYS_MAP = getInitKeysMap();
 
@@ -10,11 +11,13 @@ export const AppContext = createContext({
         word: '',
         meaning: '',
         pos: ''
-    }
+    },
+    loading: true
 });
 
 const AppContextProvider = ({ children }) => {
     const [keys, setKeys] = useState(INIT_KEYS_MAP);
+    const [loading, setLoading] = useState(true);
     const [details, setDetails] = useState({
         word: '',
         meaning: '',
@@ -39,6 +42,22 @@ const AppContextProvider = ({ children }) => {
         }
     }
 
+    useEffect(() => {
+        async function getWordMeanPOS() {
+            try {
+                const response = await axios.get('/api/detail/collins/generate');
+                const wordMeanPos = response.data;
+                console.log('I have come after response', wordMeanPos);
+                // set into context
+                setDetails({ ...wordMeanPos });
+                setLoading(false);
+            } catch (error) {
+                throw new Error(error.stack);
+            }
+        }
+        getWordMeanPOS()
+    }, []);
+
     // when word changes
     useEffect(() => {
         // After getting word
@@ -46,7 +65,7 @@ const AppContextProvider = ({ children }) => {
     }, [word]);
 
     return (
-        <AppContext.Provider value={{ keys, wrongKey, rightKey, displayWord, checkAndSetChar, setDetails, details, setDisplayWord }}>
+        <AppContext.Provider value={{ keys, wrongKey, rightKey, displayWord, checkAndSetChar, setDetails, details, setDisplayWord, loading, setLoading }}>
             {children}
         </AppContext.Provider>
     );

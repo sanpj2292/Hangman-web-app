@@ -60,8 +60,12 @@ async function getWordMeaningPOSFromCollins(words) {
 }
 
 router.get('/collins/generate', async (req, res) => {
-    const wordObj = await getWordMeaningPOSFromCollins(req.words);
-    res.status(200).send({ ...wordObj });
+    try {
+        const wordObj = await getWordMeaningPOSFromCollins(req.words);
+        return res.status(200).send({ ...wordObj });
+    } catch (error) {
+        return res.status(500).send(new Error('Could not generate the word'));
+    }
 });
 
 module.exports = router;

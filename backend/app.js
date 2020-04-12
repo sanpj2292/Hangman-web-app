@@ -14,8 +14,6 @@ app.use(cors(
     }
 ));
 
-
-
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'bin/build')));
 
@@ -50,8 +48,10 @@ app.emit('initialize');
 app.use((req, res, next) => {
     console.log('Middleware called');
     req.words = words;
+    console.log('Middleware ends');
     next();
 });
+
 
 app.use('/api', router);
 
