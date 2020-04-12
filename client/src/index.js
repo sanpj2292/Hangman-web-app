@@ -10,7 +10,8 @@ ReactDOM.render(
     <React.StrictMode>
       <App />
     </React.StrictMode>
-  </AppContextProvider>,
+  </AppContextProvider>
+  ,
   document.getElementById('root')
 );
 

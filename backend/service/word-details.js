@@ -40,7 +40,6 @@ async function getWordMeaningPos(words, trialCount) {
 }
 
 router.get('/', async (req, res) => {
-    console.log('Detail');
     const wordMeanPos = await getWordMeaningPos(req.words, 100);
     res.status(200).send({ ...wordMeanPos });
 });

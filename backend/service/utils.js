@@ -36,6 +36,7 @@ const getCollinsDicPOSMeaningContent = async (inputWord, retrialLimit) => {
             }, '').trim();
 
         if (retrialLimit <= 0) throw new Error('Retiral Limits Exceeded');
+        console.log(`Retrying to fetch data success.... ${retrialLimit}`);
         return { word, pos, meaning };
     } catch (error) {
         if (retrialLimit <= 0) throw new Error(error);

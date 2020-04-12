@@ -4,7 +4,8 @@ export const setWrongKey = (keys, key) => {
         [key]: {
             key,
             init: false,
-            wrong: true
+            wrong: true,
+            pressed: true
         }
     };
 };
@@ -15,14 +16,15 @@ export const setRightKey = (keys, key) => {
         [key]: {
             key,
             init: false,
-            wrong: false
+            wrong: false,
+            pressed: true
         }
     }
 }
 
 export const getInitKeysMap = () => 'qwertyuiopasdfghjklzxcvbnm'.split('')
     .reduce((acc, key) => {
-        acc[key] = { key, wrong: false, init: true };
+        acc[key] = { key, wrong: false, init: true, pressed: false };
         return acc;
     }, {});
 
