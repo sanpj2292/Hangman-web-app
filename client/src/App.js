@@ -12,43 +12,40 @@ import { AppContext } from "./contexts/context-provider";
 import { replaceWithMatchingChar, setRightKey, setWrongKey } from "./contexts/context-util";
 
 function App() {
-  const { displayWord, details: { word }, attempts, keys, dispatch, alert: { type, message } } = useContext(AppContext);
+  const { displayWord, details: { word }, attempts,
+    keys, dispatch, alert: { type, message } } = useContext(AppContext);
 
   const onKeyUpHandler = e => {
     const { key } = e;
-    console.log(`Attempts: ${attempts}`);
-    if (attempts <= 0) {
-      e.stopPropagation();
-      dispatch(lossAction());
-    } else {
-      // if (keys[key] && displayWord.indexOf(key) === -1) {
-      // if key has already been pressed
-      if (keys[key] && keys[key].pressed) {
-        dispatch(
-          alertAction({
-            type: 'info',
-            message: `KEY:'${key.toUpperCase()}' has already been pressed`
-          })
-        );
-      } else {
-        let i = word.indexOf(key);
-        if (i > -1) {
-          const newKeys = setRightKey(keys, key);
-          const newDisplayWord = replaceWithMatchingChar(displayWord, word, key);
-          // Win condition
-          if (newDisplayWord.toLowerCase() === word) {
-            dispatch(winAction());
-          } else {
-            // Not a win but right guess is rewarded
-            dispatch(rightAction(newKeys, newDisplayWord));
-          }
-        } else {
-          // Not a win/loss but wrong guess is being handled
-          const newKeys = setWrongKey(keys, key);
-          dispatch(wrongAction(newKeys, attempts - 1));
+    // if key has already been pressed
+    if (keys[key] && keys[key].pressed) {
+      return dispatch(
+        alertAction({
+          type: 'info',
+          message: `KEY: '${key.toUpperCase()}' has already been pressed`
+        })
+      );
+    }
+    if (keys[key]) {
+      let i = word.indexOf(key);
+      if (i > -1) {
+        const newKeys = setRightKey(keys, key);
+        const newDisplayWord = replaceWithMatchingChar(displayWord, word, key);
+        // Win condition
+        if (newDisplayWord.toLowerCase() === word) {
+          return dispatch(winAction());
         }
+        // Not a win but right guess is rewarded
+        return dispatch(rightAction(newKeys, newDisplayWord));
       }
-      // }
+      // Loss condition before wrongAction
+      if (attempts <= 1) {
+        e.stopPropagation();
+        return dispatch(lossAction());
+      }
+      // Not a win/loss but wrong guess is being handled
+      const newKeys = setWrongKey(keys, key);
+      return dispatch(wrongAction(newKeys, attempts - 1));
     }
   }
 
