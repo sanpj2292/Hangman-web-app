@@ -6,6 +6,7 @@ const GameContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    flex-direction: column;
     padding: 8px;
 
 

@@ -5,6 +5,8 @@ export const generateAction = (wordMeanPOS) => {
     const { word, meaning, pos } = wordMeanPOS;
     const displayWord = initializeDisplayWord(word);
     const attempts = word.length + 2;
+    const totalAttempts = word.length + 2;
+
     return {
         type: GENERATE,
         payload: {
@@ -15,19 +17,19 @@ export const generateAction = (wordMeanPOS) => {
             },
             displayWord,
             attempts,
+            totalAttempts,
             loading: false
         }
     };
 };
 
 
-export const rightAction = (keys, displayWord, attempts) => {
+export const rightAction = (keys, displayWord) => {
     return {
         type: RIGHT,
         payload: {
             keys,
-            displayWord,
-            attempts
+            displayWord
         }
     };
 };

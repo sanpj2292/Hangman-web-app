@@ -5,11 +5,11 @@ const StyledAlert = styled.div.attrs(props => ({
     type: props.type || 'info',
     show: props.show
 }))`
-    width: 50%;
+    width: 60%;
     position: relative;
     margin: 8px auto;
     color: white;
-    transition: linear 0.1s;
+    transition: display 0.2s ease-in-out;
     ${props => {
         switch (props.type) {
             case 'success':
@@ -34,6 +34,11 @@ const StyledAlert = styled.div.attrs(props => ({
         font-size: 0.7rem;
         color: #FFF;
         cursor: pointer;
+    }
+
+    @media screen and (max-width: 480px) {
+        width: 90%;
+        font-size: 12px;
     }
 `;
 

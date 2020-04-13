@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const setWrongKey = (keys, key) => {
     return {
         ...keys,
@@ -47,3 +49,12 @@ export const replaceWithMatchingChar = (displayWord, refWord, char) => {
     matchIndexes.forEach(i => _dispArr[i] = char.toUpperCase());
     return _dispArr.join('');
 }
+
+export async function getWordMeanPOS() {
+    try {
+        const response = await axios.get('/api/detail/collins/generate');
+        return response.data;
+    } catch (error) {
+        throw new Error(error.stack);
+    }
+};

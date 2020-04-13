@@ -12,51 +12,53 @@ import { AppContext } from "./contexts/context-provider";
 import { replaceWithMatchingChar, setRightKey, setWrongKey } from "./contexts/context-util";
 
 function App() {
-  const { displayWord, details: { word }, attempts,
-    keys, dispatch, alert: { type, message } } = useContext(AppContext);
+  const { displayWord, details: { word }, attempts, keys, dispatch, alert: { type, message } } = useContext(AppContext);
 
   const onKeyUpHandler = e => {
     const { key } = e;
-    if (attempts <= 1) {
+    console.log(`Attempts: ${attempts}`);
+    if (attempts <= 0) {
       e.stopPropagation();
       dispatch(lossAction());
     } else {
-      if (keys[key] && displayWord.indexOf(key) === -1) {
-        // if key has already been pressed
-        if (keys[key].pressed) {
-          dispatch(
-            alertAction({
-              type: 'info',
-              message: `KEY:'${key.toUpperCase()}' has already been pressed`
-            })
-          );
-        } else {
-          let i = word.indexOf(key);
-          if (i > -1) {
-            const newKeys = setRightKey(keys, key);
-            const newDisplayWord = replaceWithMatchingChar(displayWord, word, key);
-            // Win condition
-            if (newDisplayWord === word) {
-              dispatch(winAction());
-            } else {
-              // Not a win but right guess is rewarded
-              dispatch(rightAction(newKeys, newDisplayWord, attempts - 1));
-            }
+      // if (keys[key] && displayWord.indexOf(key) === -1) {
+      // if key has already been pressed
+      if (keys[key] && keys[key].pressed) {
+        dispatch(
+          alertAction({
+            type: 'info',
+            message: `KEY:'${key.toUpperCase()}' has already been pressed`
+          })
+        );
+      } else {
+        let i = word.indexOf(key);
+        if (i > -1) {
+          const newKeys = setRightKey(keys, key);
+          const newDisplayWord = replaceWithMatchingChar(displayWord, word, key);
+          // Win condition
+          if (newDisplayWord.toLowerCase() === word) {
+            dispatch(winAction());
           } else {
-            // Not a win/loss but wrong guess is being handled
-            const newKeys = setWrongKey(keys, key);
-            dispatch(wrongAction(newKeys, attempts - 1));
+            // Not a win but right guess is rewarded
+            dispatch(rightAction(newKeys, newDisplayWord));
           }
+        } else {
+          // Not a win/loss but wrong guess is being handled
+          const newKeys = setWrongKey(keys, key);
+          dispatch(wrongAction(newKeys, attempts - 1));
         }
       }
+      // }
     }
   }
 
   return (
     <div className="App">
-      {type && type.length > 0 ? <Alert {...{ type, message }} timeout={3000}
-        onDismissAlert={() => dispatch(dismissAlertAction())} /> : null}
       <GameContainer>
+        <div className='d-flex flex-wrap justify-content-center align-items-center py-1'>
+          {type && type.length > 0 ? <Alert {...{ type, message }} timeout={3000}
+            onDismissAlert={() => dispatch(dismissAlertAction())} /> : null}
+        </div>
         <div className='ml-auto pb-2'>
           <Attempts />
         </div>

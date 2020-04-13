@@ -5,6 +5,7 @@ export const initialState = {
     keys: getInitKeysMap(),
     displayWord: '',
     attempts: 0,
+    totalAttempts: 0,
     loading: true,
     details: {
         word: '',
