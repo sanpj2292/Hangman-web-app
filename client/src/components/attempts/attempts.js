@@ -6,7 +6,7 @@ import HangmanScaffold from "../hangman/scaffold";
 const Attempts = () => {
     const { attempts, totalAttempts } = useContext(AppContext);
     return (
-        attempts > 0 ? (
+        attempts >= 0 ? (
             <div className='d-inline-flex flex-row flex-wrap justify-content-center'>
                 <HangmanScaffold />
                 <div className='ml-auto pb-2'>

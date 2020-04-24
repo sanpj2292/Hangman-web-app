@@ -25,6 +25,7 @@ function App() {
 
   const onKeyUpHandler = e => {
     const { key } = e;
+
     // if key has already been pressed
     if (keys[key] && keys[key].pressed) {
       return dispatch(
@@ -47,7 +48,7 @@ function App() {
         return dispatch(rightAction(newKeys, newDisplayWord));
       }
       // Loss condition before wrongAction
-      if (attempts <= 1) {
+      if (attempts <= 0) {
         e.stopPropagation();
         return dispatch(lossAction());
       }

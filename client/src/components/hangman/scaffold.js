@@ -1,5 +1,6 @@
 import React from "react";
 import "./scaffold.css";
+import Hangman from "./hangman";
 
 export default class HangmanScaffold extends React.Component {
 
@@ -23,6 +24,7 @@ export default class HangmanScaffold extends React.Component {
                     <rect fill="#053544" width="60%" height="2%" x="4%" y="0" />
                     <rect fill="#053544" width="60%" height="2%" x="0" y="80%" />
                     <line x1="58%" y1="0" x2="58%" y2="24%" stroke="rgb(0,0,0)" />
+                    <Hangman />
                 </svg>
             </div>
         );
