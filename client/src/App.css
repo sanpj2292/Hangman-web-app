@@ -1,7 +1,8 @@
 .App {
   text-align: center;
-  width: 90vw;
   padding: 2rem;
+  max-height: 95vh;
+  max-width: 95vw;
 }
 
 .key-container {
