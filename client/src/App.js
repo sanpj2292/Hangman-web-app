@@ -10,7 +10,6 @@ import Alert from "./components/styled/alert";
 import { AppContext } from "./contexts/context-provider";
 
 import { replaceWithMatchingChar, setRightKey, setWrongKey } from "./contexts/context-util";
-import HangmanScaffold from './components/hangman/scaffold';
 
 function App() {
   const { displayWord, details: { word }, attempts,
