@@ -17,6 +17,7 @@ function App() {
 
   const containerRef = useRef();
 
+  // componentDidMount
   useEffect(() => {
     // To set focus to the keys container when it loads initially
     containerRef.current.focus();
