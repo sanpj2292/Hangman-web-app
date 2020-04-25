@@ -59,7 +59,7 @@ function App() {
   }
 
   return (
-    <div className="App d-flex flex-column">
+    <div className="container">
       <GameContainer >
         <div className='d-flex flex-wrap justify-content-center align-items-center py-1'>
           {type && type.length > 0 ? <Alert {...{ type, message }} timeout={3000}

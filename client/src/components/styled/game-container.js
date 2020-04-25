@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 const GameContainer = styled.div`
-    width: 60%;
+    width: 90%;
+    height: 90%;
     background: #c2c2a4;
     display: flex;
     flex-wrap: wrap;

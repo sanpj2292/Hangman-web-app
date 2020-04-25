@@ -7,11 +7,15 @@ const Attempts = () => {
     const { attempts, totalAttempts } = useContext(AppContext);
     return (
         attempts >= 0 ? (
-            <div className='d-inline-flex flex-row flex-wrap justify-content-center'>
-                <HangmanScaffold />
-                <div className='ml-auto pb-2'>
-                    <h6>Attempts Left: </h6>
-                    <Battery actual={attempts} total={totalAttempts} />
+            <div className='container'>
+                <div className='row'>
+                    <div className='col-sm-10'>
+                        <HangmanScaffold />
+                    </div>
+                    {/* <div className='col-sm-2'>
+                        <h6>Attempts Left: </h6>
+                        <Battery actual={attempts} total={totalAttempts} />
+                    </div> */}
                 </div>
             </div>
         ) : null
