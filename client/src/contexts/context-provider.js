@@ -11,13 +11,6 @@ export const AppContext = createContext({
 const AppContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(gameReducer, initialState);
 
-    // componentDidMount
-    useEffect(() => {
-        getWordMeanPOS()
-            .then(wordMeanPos => dispatch(generateAction(wordMeanPos)))
-            .catch(e => console.error(e));
-    }, []);
-
     return (
         <AppContext.Provider value={{ ...state, dispatch }}>
             {children}

@@ -1,103 +1,34 @@
-import React, { useRef, useContext, useEffect } from 'react';
+import React, { useContext, useLayoutEffect } from 'react';
 import './App.css';
-import Keys from './components/keys/keys';
-import DisplayWord from './components/display-word/display-word';
-import WithSpinner from "./components/HOC/with-spinner";
-import Attempts from './components/attempts/attempts';
 import GameContainer from './components/styled/game-container';
-import { generateAction, winAction, rightAction, lossAction, dismissAlertAction, wrongAction, alertAction } from './contexts/actions';
-import Accordion from "./components/styled/accordion";
-import Alert from "./components/styled/alert";
+import { generateAction } from './contexts/actions';
+import Home from "./pages/home";
 import { AppContext } from "./contexts/context-provider";
 
 import {
-  replaceWithMatchingChar, setRightKey,
-  setWrongKey, getWordMeanPOS
+  getWordMeanPOS
 } from "./contexts/context-util";
 
 function App() {
-  const { displayWord, details: { word, pos, meaning }, attempts,
-    keys, dispatch, alert: { type, message } } = useContext(AppContext);
 
-  const containerRef = useRef();
+  const { dispatch } = useContext(AppContext)
 
   // componentDidMount
-  // useEffect(() => {
-  //   getWordMeanPOS()
-  //     .then(wordMeanPos => {
-  //       dispatch(generateAction(wordMeanPos))
-  //       containerRef.current.focus();
-  //     })
-  //     .catch(e => console.error(e));
-  //   // To set focus to the keys container when it loads initially
-  // }, [])
-
-  const onKeyUpHandler = e => {
-    const { key } = e;
-
-    // if key has already been pressed
-    if (keys[key] && keys[key].pressed) {
-      return dispatch(
-        alertAction({
-          type: 'info',
-          message: `KEY: '${key.toUpperCase()}' has already been pressed`
-        })
-      );
-    }
-    if (keys[key]) {
-      let i = word.indexOf(key);
-      if (i > -1) {
-        const newKeys = setRightKey(keys, key);
-        const newDisplayWord = replaceWithMatchingChar(displayWord, word, key);
-        // Win condition
-        if (newDisplayWord.toLowerCase() === word) {
-          return dispatch(winAction());
-        }
-        // Not a win but right guess is rewarded
-        return dispatch(rightAction(newKeys, newDisplayWord));
-      }
-      // Loss condition before wrongAction
-      if (attempts <= 0) {
-        e.stopPropagation();
-        return dispatch(lossAction());
-      }
-      // Not a win/loss but wrong guess is being handled
-      const newKeys = setWrongKey(keys, key);
-      return dispatch(wrongAction(newKeys, attempts - 1));
-    }
-  }
+  useLayoutEffect(() => {
+    getWordMeanPOS()
+      .then(wordMeanPos => {
+        dispatch(generateAction(wordMeanPos))
+      })
+      .catch(e => console.error(e));
+  }, []);
 
   return (
     <div className="container">
       <GameContainer >
-        <div className='row'>
-          <div className='col'>
-            <div className='d-flex flex-wrap justify-content-center align-items-center py-1'>
-              {type && type.length > 0 ? <Alert {...{ type, message }} timeout={3000}
-                onDismissAlert={() => dispatch(dismissAlertAction())} /> : null}
-            </div>
-            <Attempts />
-          </div>
-
-          <div className='col'>
-            <Accordion containerClasses='accordion' btnLabel='hint'>
-              <h5>{pos}</h5>
-              <p>{meaning}</p>
-            </Accordion>
-            <div className='container d-flex flex-wrap justify-content-center pb-4'>
-              <DisplayWord />
-            </div>
-            <div tabIndex={-1}
-              ref={containerRef}
-              className='key-container d-flex flex-wrap justify-content-center'
-              onKeyUp={onKeyUpHandler}>
-              <Keys keyList={Object.keys(keys)}></Keys>
-            </div>
-          </div>
-        </div>
+        <Home />
       </GameContainer>
     </div>
   );
 }
 
-export default WithSpinner(App);
+export default App;
