@@ -6,13 +6,14 @@ import WithSpinner from "./components/HOC/with-spinner";
 import Attempts from './components/attempts/attempts';
 import GameContainer from './components/styled/game-container';
 import { winAction, rightAction, lossAction, dismissAlertAction, wrongAction, alertAction } from './contexts/actions';
+import Accordion from "./components/styled/accordion";
 import Alert from "./components/styled/alert";
 import { AppContext } from "./contexts/context-provider";
 
 import { replaceWithMatchingChar, setRightKey, setWrongKey } from "./contexts/context-util";
 
 function App() {
-  const { displayWord, details: { word }, attempts,
+  const { displayWord, details: { word, pos, meaning }, attempts,
     keys, dispatch, alert: { type, message } } = useContext(AppContext);
 
   const containerRef = useRef();
@@ -60,20 +61,32 @@ function App() {
 
   return (
     <div className="container">
+
       <GameContainer >
-        <div className='d-flex flex-wrap justify-content-center align-items-center py-1'>
-          {type && type.length > 0 ? <Alert {...{ type, message }} timeout={3000}
-            onDismissAlert={() => dispatch(dismissAlertAction())} /> : null}
-        </div>
-        <Attempts />
-        <div className='container d-flex flex-wrap justify-content-center pb-2'>
-          <DisplayWord />
-        </div>
-        <div tabIndex={-1}
-          ref={containerRef}
-          className='key-container d-flex flex-wrap justify-content-center'
-          onKeyUp={onKeyUpHandler}>
-          <Keys keyList={Object.keys(keys)}></Keys>
+        <div className='row'>
+          <div className='col'>
+            <div className='d-flex flex-wrap justify-content-center align-items-center py-1'>
+              {type && type.length > 0 ? <Alert {...{ type, message }} timeout={3000}
+                onDismissAlert={() => dispatch(dismissAlertAction())} /> : null}
+            </div>
+            <Attempts />
+          </div>
+
+          <div className='col'>
+            <Accordion containerClasses='accordion' btnLabel='hint'>
+              <h5>{pos}</h5>
+              <p>{meaning}</p>
+            </Accordion>
+            <div className='container d-flex flex-wrap justify-content-center pb-4'>
+              <DisplayWord />
+            </div>
+            <div tabIndex={-1}
+              ref={containerRef}
+              className='key-container d-flex flex-wrap justify-content-center'
+              onKeyUp={onKeyUpHandler}>
+              <Keys keyList={Object.keys(keys)}></Keys>
+            </div>
+          </div>
         </div>
       </GameContainer>
     </div>

@@ -11,6 +11,10 @@
   border: 1px gainsboro solid;
 }
 
+.accordion {
+  margin: 0.5rem auto 1rem auto;
+}
+
 @media screen and (max-width: 480px) {
   .key-container {
     padding: 2px 2px;

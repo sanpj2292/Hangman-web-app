@@ -20,7 +20,7 @@ export default class HangmanScaffold extends React.Component {
         return (
             <div className='scaffold-container'>
                 <svg className='svg-box'
-                    version="1.1" viewBox="0 0 100 100" width='50%' height='100%' preserveAspectRatio="xMinYMin meet" >
+                    version="1.1" viewBox="0 0 100 100" width='80%' height='80%' preserveAspectRatio="xMinYMin meet" >
                     <rect fill="#053544" width="2%" height="80%" x="4%" y="0" />
                     <rect fill="#053544" width="60%" height="2%" x="4%" y="0" />
                     <rect fill="#053544" width="60%" height="2%" x="0" y="80%" />
