@@ -5,12 +5,15 @@ import DisplayWord from './components/display-word/display-word';
 import WithSpinner from "./components/HOC/with-spinner";
 import Attempts from './components/attempts/attempts';
 import GameContainer from './components/styled/game-container';
-import { winAction, rightAction, lossAction, dismissAlertAction, wrongAction, alertAction } from './contexts/actions';
+import { generateAction, winAction, rightAction, lossAction, dismissAlertAction, wrongAction, alertAction } from './contexts/actions';
 import Accordion from "./components/styled/accordion";
 import Alert from "./components/styled/alert";
 import { AppContext } from "./contexts/context-provider";
 
-import { replaceWithMatchingChar, setRightKey, setWrongKey } from "./contexts/context-util";
+import {
+  replaceWithMatchingChar, setRightKey,
+  setWrongKey, getWordMeanPOS
+} from "./contexts/context-util";
 
 function App() {
   const { displayWord, details: { word, pos, meaning }, attempts,
@@ -19,10 +22,15 @@ function App() {
   const containerRef = useRef();
 
   // componentDidMount
-  useEffect(() => {
-    // To set focus to the keys container when it loads initially
-    containerRef.current.focus();
-  }, [])
+  // useEffect(() => {
+  //   getWordMeanPOS()
+  //     .then(wordMeanPos => {
+  //       dispatch(generateAction(wordMeanPos))
+  //       containerRef.current.focus();
+  //     })
+  //     .catch(e => console.error(e));
+  //   // To set focus to the keys container when it loads initially
+  // }, [])
 
   const onKeyUpHandler = e => {
     const { key } = e;
@@ -61,7 +69,6 @@ function App() {
 
   return (
     <div className="container">
-
       <GameContainer >
         <div className='row'>
           <div className='col'>

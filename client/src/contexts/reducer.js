@@ -7,6 +7,8 @@ export const initialState = {
     attempts: 0,
     totalAttempts: 0,
     loading: true,
+    finishedWord: '',
+    finished: false,
     details: {
         word: '',
         meaning: '',
@@ -33,13 +35,17 @@ const gameReducer = (state, action) => {
         case WIN:
             return {
                 ...state,
-                displayWord: 'Congratulations, You Won!!'
+                finishedWord: 'Congratulations, You Won!!',
+                displayWord: state.details.word.toUpperCase(),
+                finished: true
             };
         case LOSS:
             return {
                 ...state,
-                displayWord: 'Sorry, you lost the game!!',
-                attempts: state.attempts > 0 ? state.attempts - 1 : state.attempts
+                finishedWord: 'Sorry, you lost the game!!',
+                displayWord: state.details.word.toUpperCase(),
+                attempts: state.attempts > 0 ? state.attempts - 1 : state.attempts,
+                finished: true
             };
         case ALERT:
             return {
