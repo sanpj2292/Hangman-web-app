@@ -1,7 +1,7 @@
 import React, { useContext, useLayoutEffect } from 'react';
 import './App.css';
 import GameContainer from './components/styled/game-container';
-import { generateAction } from './contexts/actions';
+import { generateAction, alertAction } from './contexts/actions';
 import Home from "./pages/home";
 import { AppContext } from "./contexts/context-provider";
 
@@ -19,7 +19,14 @@ function App() {
       .then(wordMeanPos => {
         dispatch(generateAction(wordMeanPos))
       })
-      .catch(e => console.error(e));
+      .catch(e => {
+        dispatch(
+          alertAction({
+            type: 'danger',
+            message: e.message
+          })
+        );
+      });
   }, []);
 
   return (
