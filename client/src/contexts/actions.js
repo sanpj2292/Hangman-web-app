@@ -1,14 +1,14 @@
 import { initializeDisplayWord } from "./context-util";
-import { GENERATE, RIGHT, WRONG, WIN, LOSS, ALERT, DISMISS_ALERT } from "./action-types";
+import { GENERATE, RIGHT, WRONG, WIN, LOSS, ALERT, DISMISS_ALERT, RELOAD } from "./action-types";
 
-export const generateAction = (wordMeanPOS) => {
+const wordGenerationUtil = (actionType, wordMeanPOS) => {
     const { word, meaning, pos } = wordMeanPOS;
     const displayWord = initializeDisplayWord(word);
     const attempts = word.length + 2;
     const totalAttempts = word.length + 2;
 
     return {
-        type: GENERATE,
+        type: actionType,
         payload: {
             details: {
                 word,
@@ -20,7 +20,11 @@ export const generateAction = (wordMeanPOS) => {
             totalAttempts,
             loading: false
         }
-    };
+    }
+}
+
+export const generateAction = (wordMeanPOS) => {
+    return wordGenerationUtil(GENERATE, wordMeanPOS);
 };
 
 
@@ -61,3 +65,7 @@ export const alertAction = ({ type, message }) => ({
 export const dismissAlertAction = () => ({
     type: DISMISS_ALERT
 });
+
+export const reloadAction = () => ({
+    type: RELOAD
+})

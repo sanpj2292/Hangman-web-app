@@ -2,13 +2,21 @@ import React, { useContext } from "react";
 import { AppContext } from "../../contexts/context-provider";
 import "./scaffold.css";
 import Hangman from "./hangman";
-import Status from '../styled/typography/container'
+import Status from '../styled/typography/container';
+import Button from "../styled/button";
+import { reloadAction } from "../../contexts/actions";
 
 export default function HangmanScaffold() {
-    const { finished, finishedWord, isWin } = useContext(AppContext);
+    const { finished, finishedWord, isWin, dispatch } = useContext(AppContext);
     const url = isWin ?
         'https://media.giphy.com/media/KH21ScGPuE7QDS1Y9I/source.gif' :
         'https://media.giphy.com/media/rKj0oXtnMQNwY/source.gif';
+
+    const restartGame = () => {
+        // Mount the whole component again
+        dispatch(reloadAction());
+    };
+
     return (
         <div className='scaffold-container'>
             {!finished ? <svg className='svg-box'
@@ -20,7 +28,17 @@ export default function HangmanScaffold() {
                 <Hangman />
             </svg> : (<>
                 <img src={url} alt={isWin ? 'Win' : 'Loss'} />
-                <Status isSuccess={isWin && finished} content={finishedWord} />
+                <div className='container'>
+
+                    <div className='row'>
+                        <div className='col-10 pl-0 mr-auto'>
+                            <Status isSuccess={isWin && finished} content={finishedWord} />
+                        </div>
+                        <div className='col-2 ml-auto mt-2'>
+                            <Button label='Restart' onClick={e => restartGame()} />
+                        </div>
+                    </div>
+                </div>
             </>)
             }
         </div>

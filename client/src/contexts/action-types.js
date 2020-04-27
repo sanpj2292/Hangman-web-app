@@ -6,3 +6,5 @@ export const LOSS = 'LOSS';
 
 export const ALERT = 'ALERT';
 export const DISMISS_ALERT = 'DISMISS_ALERT';
+
+export const RELOAD = 'RELOAD';

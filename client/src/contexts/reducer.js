@@ -1,5 +1,5 @@
 import { getInitKeysMap } from "./context-util";
-import { GENERATE, WRONG, RIGHT, WIN, LOSS, ALERT, DISMISS_ALERT } from "./action-types";
+import { GENERATE, WRONG, RIGHT, WIN, LOSS, ALERT, DISMISS_ALERT, RELOAD } from "./action-types";
 
 export const initialState = {
     keys: getInitKeysMap(),
@@ -24,7 +24,6 @@ const gameReducer = (state, action) => {
     switch (action.type) {
         case RIGHT:
         case WRONG:
-        case GENERATE:
             return {
                 ...state,
                 ...action.payload,
@@ -62,6 +61,16 @@ const gameReducer = (state, action) => {
                     ...initialState.alert
                 }
             };
+        case GENERATE:
+            return {
+                ...initialState,
+                ...action.payload
+            };
+        case RELOAD:
+            return {
+                ...state,
+                loading: true
+            }
         default:
             return state;
     }

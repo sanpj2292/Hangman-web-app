@@ -9,12 +9,14 @@ import { mountWithWordMeanPOS } from "./contexts/context-util";
 
 function App() {
 
-  const { dispatch } = useContext(AppContext)
+  const { dispatch, loading } = useContext(AppContext)
 
   // componentDidMount
   useEffect(() => {
-    mountWithWordMeanPOS(dispatch, generateAction);
-  }, []);
+    if (loading) {
+      mountWithWordMeanPOS(dispatch, generateAction);
+    }
+  }, [loading]);
 
   return (
     <div className="container">

@@ -4,6 +4,7 @@ import {
     alertAction, winAction, lossAction, rightAction,
     wrongAction, dismissAlertAction
 } from "../contexts/actions";
+
 import Keys from '../components/keys/keys';
 import DisplayWord from '../components/display-word/display-word';
 import WithSpinner from "../components/HOC/with-spinner";
@@ -14,6 +15,7 @@ import Alert from "../components/styled/alert";
 import { setWrongKey, setRightKey, replaceWithMatchingChar } from "../contexts/context-util";
 import { AppContext } from "../contexts/context-provider";
 
+import './home.css';
 
 function Home() {
 
@@ -66,7 +68,7 @@ function Home() {
 
     return (
         <div className='row'>
-            <div className='col'>
+            <div className='col left'>
                 <div className='d-flex flex-wrap justify-content-center align-items-center py-1'>
                     {type && type.length > 0 ? <Alert {...{ type, message }} timeout={3000}
                         onDismissAlert={() => dispatch(dismissAlertAction())} /> : null}
