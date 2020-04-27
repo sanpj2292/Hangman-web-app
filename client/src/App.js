@@ -1,20 +1,18 @@
-import React, { useContext, useLayoutEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import './App.css';
 import GameContainer from './components/styled/game-container';
 import { generateAction, alertAction } from './contexts/actions';
 import Home from "./pages/home";
 import { AppContext } from "./contexts/context-provider";
 
-import {
-  getWordMeanPOS
-} from "./contexts/context-util";
+import { getWordMeanPOS } from "./contexts/context-util";
 
 function App() {
 
   const { dispatch } = useContext(AppContext)
 
   // componentDidMount
-  useLayoutEffect(() => {
+  useEffect(() => {
     getWordMeanPOS()
       .then(wordMeanPos => {
         dispatch(generateAction(wordMeanPos))

@@ -13,8 +13,8 @@ const AccordionBtn = styled.a`
   padding: 0.5rem;
   text-align: left;
   ${({ isOpen }) => (isOpen ?
-        `border-bottom: 0;` :
-        `border-bottom: 1px solid #007bff;`)}
+    `border-bottom: 0;` :
+    `border-bottom: 1px solid #007bff;`)}
   z-index: 25;
   text-decoration: none;
   box-shadow: 0 0.5rem 1rem #ccc;
@@ -35,7 +35,6 @@ const AccordionBtn = styled.a`
 const AccordionBtnContent = styled.span`
   padding: 0.2rem;
   color: #000;
-  margin-left: 1.2rem;
   text-transform: capitalize;
   
   &::after {
@@ -53,7 +52,7 @@ const AccordionContent = styled.div`
   width: 100%;
   background-image: linear-gradient(to right bottom, #f7f7f7, #eeeeee);
   display: ${props => (props.show ? "block" : "none")};
-  padding: 0.5rem;
+  padding: 0.75rem;
   margin: 0;
   text-align: left;
   z-index: 1;
@@ -62,20 +61,20 @@ const AccordionContent = styled.div`
 `;
 
 export default ({ children, btnLabel, containerClasses, otherProps }) => {
-    const [contentDisplay, setContentDisplay] = useState(true);
+  const [contentDisplay, setContentDisplay] = useState(true);
 
-    const onAccordionBtnClick = () => {
-        setContentDisplay(!contentDisplay);
-    };
+  const onAccordionBtnClick = () => {
+    setContentDisplay(!contentDisplay);
+  };
 
-    return (
-        <Container className={containerClasses}>
-            <AccordionBtn {...otherProps} onClick={onAccordionBtnClick}>
-                <AccordionBtnContent isOpen={contentDisplay}>
-                    {btnLabel}
-                </AccordionBtnContent>
-            </AccordionBtn>
-            <AccordionContent show={contentDisplay}>{children}</AccordionContent>
-        </Container>
-    );
+  return (
+    <Container className={containerClasses}>
+      <AccordionBtn {...otherProps} onClick={onAccordionBtnClick}>
+        <AccordionBtnContent isOpen={contentDisplay}>
+          {btnLabel}
+        </AccordionBtnContent>
+      </AccordionBtn>
+      <AccordionContent show={contentDisplay}>{children}</AccordionContent>
+    </Container>
+  );
 };

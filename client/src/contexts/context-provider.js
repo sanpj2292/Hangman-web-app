@@ -1,7 +1,5 @@
-import React, { createContext, useReducer, useEffect } from 'react';
+import React, { createContext, useReducer } from 'react';
 import gameReducer, { initialState } from "./reducer";
-import { getWordMeanPOS } from "./context-util";
-import { generateAction } from "./actions";
 
 export const AppContext = createContext({
     ...initialState,

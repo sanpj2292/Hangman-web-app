@@ -52,14 +52,15 @@ function Home() {
                 // Not a win but right guess is rewarded
                 return dispatch(rightAction(newKeys, newDisplayWord));
             }
-            // Loss condition before wrongAction
-            if (attempts <= 0) {
-                e.stopPropagation();
-                return dispatch(lossAction());
-            }
-            // Not a win/loss but wrong guess is being handled
-            const newKeys = setWrongKey(keys, key);
-            return dispatch(wrongAction(newKeys, attempts - 1));
+
+            if (attempts - 1 > 0) {
+                // Not a win/loss but wrong guess is being handled
+                const newKeys = setWrongKey(keys, key);
+                return dispatch(wrongAction(newKeys, attempts - 1));
+            }                 // Loss condition before wrongAction
+            e.stopPropagation();
+            return dispatch(lossAction());
+
         }
     }
 
@@ -78,7 +79,7 @@ function Home() {
                     <h5>{pos}</h5>
                     <p>{meaning}</p>
                 </Accordion>
-                <div className='container d-flex flex-wrap justify-content-center pb-4'>
+                <div className='container d-flex flex-wrap justify-content-center pb-3'>
                     <DisplayWord />
                 </div>
                 <div tabIndex={-1}

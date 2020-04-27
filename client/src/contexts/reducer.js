@@ -9,6 +9,7 @@ export const initialState = {
     loading: true,
     finishedWord: '',
     finished: false,
+    isWin: null,
     details: {
         word: '',
         meaning: '',
@@ -37,6 +38,7 @@ const gameReducer = (state, action) => {
                 ...state,
                 finishedWord: 'Congratulations, You Won!!',
                 displayWord: state.details.word.toUpperCase(),
+                isWin: true,
                 finished: true
             };
         case LOSS:
@@ -45,6 +47,7 @@ const gameReducer = (state, action) => {
                 finishedWord: 'Sorry, you lost the game!!',
                 displayWord: state.details.word.toUpperCase(),
                 attempts: state.attempts > 0 ? state.attempts - 1 : state.attempts,
+                isWin: false,
                 finished: true
             };
         case ALERT:
