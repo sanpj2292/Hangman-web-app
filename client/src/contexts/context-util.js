@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { alertAction } from "./actions";
 
 export const setWrongKey = (keys, key) => {
     return {
@@ -50,11 +51,26 @@ export const replaceWithMatchingChar = (displayWord, refWord, char) => {
     return _dispArr.join('');
 }
 
-export async function getWordMeanPOS() {
+async function getWordMeanPOS() {
     try {
         const response = await axios.get('/api/detail/collins/generate');
         return response.data;
     } catch (error) {
         throw new Error(error.stack);
     }
+};
+
+export function mountWithWordMeanPOS(dispatch, action) {
+    getWordMeanPOS()
+        .then(wordMeanPos => {
+            dispatch(action(wordMeanPos))
+        })
+        .catch(e => {
+            dispatch(
+                alertAction({
+                    type: 'danger',
+                    message: e.message
+                })
+            );
+        });
 };

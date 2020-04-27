@@ -1,11 +1,11 @@
 import React, { useContext, useEffect } from 'react';
 import './App.css';
 import GameContainer from './components/styled/game-container';
-import { generateAction, alertAction } from './contexts/actions';
+import { generateAction } from './contexts/actions';
 import Home from "./pages/home";
 import { AppContext } from "./contexts/context-provider";
 
-import { getWordMeanPOS } from "./contexts/context-util";
+import { mountWithWordMeanPOS } from "./contexts/context-util";
 
 function App() {
 
@@ -13,18 +13,7 @@ function App() {
 
   // componentDidMount
   useEffect(() => {
-    getWordMeanPOS()
-      .then(wordMeanPos => {
-        dispatch(generateAction(wordMeanPos))
-      })
-      .catch(e => {
-        dispatch(
-          alertAction({
-            type: 'danger',
-            message: e.message
-          })
-        );
-      });
+    mountWithWordMeanPOS(dispatch, generateAction);
   }, []);
 
   return (
