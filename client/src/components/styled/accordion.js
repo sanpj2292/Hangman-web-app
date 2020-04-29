@@ -49,7 +49,8 @@ const AccordionBtnContent = styled.span`
 `;
 
 const AccordionContent = styled.div`
-  width: 100%;
+  max-height: 15rem;
+  overflow-y: auto;
   background-image: linear-gradient(to right bottom, #f7f7f7, #eeeeee);
   display: ${props => (props.show ? "block" : "none")};
   padding: 0.75rem;
