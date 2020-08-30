@@ -4,11 +4,15 @@ import './index.css';
 import App from './App';
 import AppContextProvider from "./contexts/context-provider";
 import * as serviceWorker from './serviceWorker';
+import Navbar from "./components/styled/styled-navbar";
 
 ReactDOM.render(
   <AppContextProvider>
     <React.StrictMode>
-      <App />
+      <>
+        <Navbar />
+        <App />
+      </>
     </React.StrictMode>
   </AppContextProvider>
   ,

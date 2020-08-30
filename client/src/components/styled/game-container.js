@@ -12,6 +12,7 @@ const GameContainer = styled.div`
     justify-content: center;
     flex-direction: column;
     padding: 1rem;
+    background-color: #f8f9fa;
 
 
     @media screen and (max-width: 480px) {
