@@ -79,7 +79,7 @@ async function formArray(readable) {
         while (true) {
             const eolInd = prev.indexOf(eol);
             if (eolInd < 1) break
-            const line = prev.slice(1, eolInd);
+            const line = prev.slice(0, eolInd);
             if (line.length >= 3) {
                 lineArray.push(line);
             }
