@@ -5,14 +5,15 @@ import App from './App';
 import AppContextProvider from "./contexts/context-provider";
 import * as serviceWorker from './serviceWorker';
 import Navbar from "./components/styled/styled-navbar";
+import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
   <AppContextProvider>
     <React.StrictMode>
-      <>
+      <BrowserRouter>
         <Navbar />
         <App />
-      </>
+      </BrowserRouter>
     </React.StrictMode>
   </AppContextProvider>
   ,

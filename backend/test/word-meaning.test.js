@@ -20,19 +20,22 @@ describe('Start with Words Test', function() {
         words = await getWords();
     });
 
-    it('Testing for Words', function() {
-        words.forEach(word => {
+    it('Testing for Words', async function() {
+        const wordsPromises = words.map(word => {
             it(`${word} has meaning`, async function(done) {
                 try {
                     console.log(word);
-                    const {meaning, pos} = await getWordDetails(word);
-                    expect(meaning.length).to.be.greaterThan(0);
-                    expect(pos.length).to.be.greaterThan(0);
-                    done();
+                    return await getWordDetails(word);
                 } catch (error) {
                     done(error);
                 }
             });
+        });
+        return Promise.all(wordsPromises).then(data => {
+            const {meaning, pos, word} = data;
+            console.log(`${word} has come into Promise.all()`);
+            expect(meaning.length).to.be.greaterThan(0);
+            expect(pos.length).to.be.greaterThan(0);
         });
     });
 })

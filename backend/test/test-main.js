@@ -45,12 +45,24 @@ const executeMain = async () => {
     return {success, failure};
 };
 
+// const promiseTest = new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//         reject('I am Error')
+//     }, 1000);
+// }).catch(e => {
+//     console.error(`Inside the promiseTest Fun: ${e}`);
+//     return `I am coming from Catch Block`;
+// });
+
 if (require.main === module) {
 
     executeMain().then(({success, failure}) => {
         console.log(`Total Number of Successful Words: ${success.length}`);
         console.log(failure);
     }).catch(e => console.error(e));
+    // promiseTest
+    // .then(d => console.log(d))
+    // .catch(e => console.error(`Inside Main Fun Promise: ${e}`));
 
     
     // getWords().then(async words => {

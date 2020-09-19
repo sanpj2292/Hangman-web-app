@@ -9,7 +9,7 @@ const getWords = async () => {
 
 const getWordDetails = async (word, retries=3) => {
     const {meaning, pos} = await getCollinsDicPOSMeaningContent(word, retries);
-    return {meaning, pos};
+    return {word, meaning, pos};
 };
 
 module.exports = {

@@ -61,9 +61,9 @@ async function getWordMeanPOS() {
 };
 
 export function mountWithWordMeanPOS(dispatch, action) {
-    getWordMeanPOS()
+    return getWordMeanPOS()
         .then(wordMeanPos => {
-            dispatch(action(wordMeanPos))
+            dispatch(action(wordMeanPos));
         })
         .catch(e => {
             dispatch(

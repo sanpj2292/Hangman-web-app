@@ -1,28 +1,22 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import './App.css';
-import GameContainer from './components/styled/game-container';
-import { generateAction } from './contexts/actions';
 import Home from "./pages/home";
 import { AppContext } from "./contexts/context-provider";
+import { Switch, Route } from "react-router-dom";
 
-import { mountWithWordMeanPOS } from "./contexts/context-util";
+import LoginInput from './pages/login';
+import GameContainer from './components/styled/game-container';
 
 function App() {
 
-  const { dispatch, loading } = useContext(AppContext)
-
-  // componentDidMount
-  useEffect(() => {
-    if (loading) {
-      mountWithWordMeanPOS(dispatch, generateAction);
-    }
-  }, [loading]);
+  const VocabuilderComponent = () => <GameContainer><Home /></GameContainer>;
 
   return (
     <div className="container">
-      <GameContainer >
-        <Home />
-      </GameContainer>
+      <Switch>
+        <Route exact component={VocabuilderComponent} path='/' />
+        <Route exact path='/login' component={LoginInput}></Route>
+      </Switch>
     </div>
   );
 }

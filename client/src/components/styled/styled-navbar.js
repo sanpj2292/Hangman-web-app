@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { OptionLink, OptionsContainer } from "./styled-navigation-options";
 
 const Nav = styled.nav`
   width: 100%;
@@ -28,9 +29,13 @@ const Navbar = () => {
   return (
     <Nav>
       <div className="row logo">
-        <img className='nav-icon' src='/vocabuilder.ico' alt='Vocabuilder'></img>
-        <h3 className='nav-text'>VocaBuilder</h3>
+        <img className='nav-icon' src='/vocabuilder.ico' alt='FunGamers'></img>
+        <h3 className='nav-text'>FunGamers</h3>
       </div>
+      <OptionsContainer>
+        <OptionLink to="/login" mLeft='1rem'>Login</OptionLink>
+        <OptionLink to="/">Vocabuilder</OptionLink>
+      </OptionsContainer>
     </Nav>
   )
 }
