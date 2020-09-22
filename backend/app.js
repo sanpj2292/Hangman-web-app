@@ -7,7 +7,9 @@ const { getWordArray } = require('./service/utils');
 
 const port = process.env.PORT || 3001;
 const app = express();
+
 const passport = require('passport');
+const GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
 
 app.use(cors(
     {
@@ -55,7 +57,6 @@ app.use((req, res, next) => {
 
 
 app.use('/api', router);
-const GoogleStrategy = require('passport-google-oauth2').Strategy;
 
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_KEY,
