@@ -5,6 +5,7 @@ const axios = require('axios');
 
 const fs = require('fs');
 const eol = require('os').EOL;
+const GoogleStrategy = require('passport-google-oauth2').Strategy;
 
 const getTextFromSpan = (htmlArray) => htmlArray.map(html => {
     const $ = cheerio.load(html);
@@ -110,6 +111,15 @@ function generateWord(words, minLength) {
     return words[Random.currentNum];
 }
 
+const getGoogleStrategy = (callbackURL) => new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_KEY,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL,
+}, (accessToken, refreshToken, profile, done) => {
+    console.log('Callback called -- inside passport callback');
+    return done(null, { profile });
+});
+
 
 module.exports = {
     getTextFromSpan,
@@ -117,7 +127,8 @@ module.exports = {
     Random,
     generateWord,
     getWordArray,
-    getCollinsDicPOSMeaningContent
+    getCollinsDicPOSMeaningContent,
+    getGoogleStrategy,
 };
 // To call this class from Nodejs Command Prompt
 if (require.main === module) {

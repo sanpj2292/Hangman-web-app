@@ -8,9 +8,6 @@ const { getWordArray } = require('./service/utils');
 const port = process.env.PORT || 3001;
 const app = express();
 
-const passport = require('passport');
-const GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
-
 app.use(cors(
     {
         credentials: true
@@ -58,29 +55,5 @@ app.use((req, res, next) => {
 
 app.use('/api', router);
 
-passport.use(new GoogleStrategy({
-    clientID: process.env.GOOGLE_CLIENT_KEY,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: '/auth/google/callback',
-}, (accessToken, refreshToken, profile, done) => {
-    console.log('Callback called -- inside passport callback');
-    return done(null, { profile });
-}));
-
-app.get('/auth/google/', passport.authenticate('google', {
-    scope: ['profile', 'email'],
-    session: false
-}));
-
-app.get('/auth/google/callback', passport.authenticate('google', {
-    failureRedirect: '/auth/google/failure',
-    session: false
-}), (req, res) => {
-    res.redirect(`http://localhost:3000/`);
-});
-
-app.get('auth/google/failure', (req, res) => {
-    res.redirect(`http://localhost:3000/login`);
-});
 
 module.exports = app;

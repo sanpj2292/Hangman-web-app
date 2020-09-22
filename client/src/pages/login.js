@@ -79,8 +79,12 @@ const LoginButton = styled.button`
     }
 `;
 
-const onLogin = () => {
-    window.open('http://localhost:3001/auth/google/', '_self');
+const onLogin = async () => {
+    try {
+        window.open('http://localhost:3001/api/auth/google/', '_self');
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 export default props => {
