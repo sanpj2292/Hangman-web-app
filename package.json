@@ -10,7 +10,8 @@
     "install:concurrently": "npm install --save concurrently",
     "preinstall": "npm run install:concurrently",
     "dev": "concurrently --kill-others-on-fail \"npm run backend\" \"npm run client\"",
-    "check:words": "cd backend && node test/test-main.js"
+    "check:words": "cd backend && node test/test-main.js",
+    "perf:server": "cd backend && npm run start:perf"
   },
   "repository": {
     "type": "git",

@@ -6,7 +6,8 @@
   "type": "commonjs",
   "scripts": {
     "test": "mocha -w -p",
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "start:perf": "node express-app.js"
   },
   "jest": {
     "testEnvironment": "node",
@@ -21,6 +22,8 @@
     "cheerio": "^1.0.0-rc.3",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "passport": "^0.4.1",
+    "passport-google-oauth2": "^0.2.0",
     "puppeteer": "^2.1.1"
   },
   "devDependencies": {
