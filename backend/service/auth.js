@@ -5,7 +5,6 @@ const { getGoogleStrategy } = require('./utils');
 
 passport.use(getGoogleStrategy('/api/auth/google/callback'));
 
-
 router.get('/google/', passport.authenticate('google', {
     scope: ['profile', 'email'],
     session: false
