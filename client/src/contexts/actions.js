@@ -1,5 +1,5 @@
 import { initializeDisplayWord } from "./context-util";
-import { GENERATE, RIGHT, WRONG, WIN, LOSS, ALERT, DISMISS_ALERT, RELOAD } from "./action-types";
+import { GENERATE, RIGHT, WRONG, WIN, LOSS, ALERT, DISMISS_ALERT, RELOAD, TOGGLE_MSG_ALERT, SET_PLAYER_GRID_API_REF } from "./action-types";
 
 const wordGenerationUtil = (actionType, wordMeanPOS) => {
     const { word, meaning, pos } = wordMeanPOS;
@@ -69,3 +69,10 @@ export const dismissAlertAction = () => ({
 export const reloadAction = () => ({
     type: RELOAD
 })
+
+export const toggleMsgAlert = ({message, actionType, open}) => ({
+    type: TOGGLE_MSG_ALERT,
+    actionType,
+    message,
+    open
+});

@@ -6,6 +6,7 @@ import { Switch, Route } from "react-router-dom";
 
 import LoginInput from './pages/login';
 import GameContainer from './components/styled/game-container';
+import League from "./pages/league";
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
       <Switch>
         <Route exact component={VocabuilderComponent} path='/' />
         <Route exact path='/login' component={LoginInput}></Route>
+        <Route exact path='/league' component={League}></Route>
       </Switch>
     </div>
   );

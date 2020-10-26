@@ -74,3 +74,16 @@ export function mountWithWordMeanPOS(dispatch, action) {
             );
         });
 };
+
+export async function getPlayers() {
+    try {
+        const resp = await axios.get('/api/league/players');
+        const {data: players} = resp.data;
+        if(players && players.length > 0)
+            return players;
+        else
+            throw 'Something wrong with Request';
+    } catch (error) {
+        throw new Error(error);
+    }
+};

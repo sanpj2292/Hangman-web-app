@@ -35,6 +35,7 @@ const Navbar = () => {
       <OptionsContainer>
         <OptionLink to="/login" mLeft='1rem'>Login</OptionLink>
         <OptionLink to="/">Vocabuilder</OptionLink>
+        <OptionLink to="/league">Super League</OptionLink>
       </OptionsContainer>
     </Nav>
   )
