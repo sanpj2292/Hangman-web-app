@@ -1,7 +1,7 @@
 import { getInitKeysMap } from "./context-util";
 import { GENERATE, WRONG, RIGHT, WIN, LOSS, ALERT, 
         DISMISS_ALERT, RELOAD, TOGGLE_MSG_ALERT,
-        SET_PLAYER_GRID_API_REF, 
+        SET_PLAYER_GRID_API_REF, SELECT_TEAM_PLAYERS, 
         TOGGLE_GRID_LOADING} from "./action-types";
 
 export const initialState = {
@@ -29,6 +29,14 @@ export const initialState = {
         position: 'bottom-right'
     },
     gridLoading: false,
+    team1: {
+        batsmen: [],
+        bowlers: []
+    },
+    team2: {
+        batsmen: [],
+        bowlers: []
+    },
 }
 const gameReducer = (state, action) => {
     switch (action.type) {
@@ -96,6 +104,20 @@ const gameReducer = (state, action) => {
             return {
                 ...state,
                 gridLoading
+            };
+        case SELECT_TEAM_PLAYERS:
+            const { team, typeOfPlayers, players } = action;
+            const {team1, team2} = state;
+            let clone = {};
+            if (team === 'team1') {
+                clone = Object.assign({}, {team1});
+            } else if (team === 'team2') {
+                clone = Object.assign({}, {team2});
+            }
+            clone[team][typeOfPlayers] = players;
+            return {
+                ...state,
+                ...clone
             };
         default:
             return state;

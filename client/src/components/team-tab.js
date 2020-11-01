@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { Tabs, Tab, Typography } from '@material-ui/core';
 import TeamsTabPanel from './team-tab-panel';
-
+import PlayerDetails from "./teams/player-details";
 
 const StyledTabs = withStyles({
     indicator: {
@@ -41,13 +41,13 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.background.paper,
     },
     demo2: {
-      backgroundColor: '#EEEBEB',
+      backgroundColor: '#F9F9F9 ',
     },
 }));
   
 export default function PlayerTabs(props) {
     const classes = useStyles();
-    const {onTabChange, value, ...otherProps} = props;
+    const {onTabChange, value, team1, team2, ...otherProps} = props;
   
     return (
       <div className={classes.root}>
@@ -57,10 +57,10 @@ export default function PlayerTabs(props) {
             <StyledTab label="Team-2" />
           </StyledTabs>
           <TeamsTabPanel value={value} id='team-1' index={0}>
-            <Typography>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda cumque dolorum inventore vitae magni, ratione modi accusamus sed autem tenetur perferendis rerum omnis rem, et vel ullam dolores, facilis minima.</Typography>
+            <PlayerDetails batsmen={team1.batsmen} bowlers={team1.bowlers} />
           </TeamsTabPanel>
           <TeamsTabPanel value={value} id='team-2' index={1}>
-            <Typography>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus nostrum ipsum enim officia velit culpa ipsam voluptates blanditiis tempora, laudantium ducimus mollitia a illum dolor aliquid asperiores qui itaque sunt?</Typography>
+            <PlayerDetails batsmen={team2.batsmen} bowlers={team2.bowlers} />
           </TeamsTabPanel>
         </div>
       </div>

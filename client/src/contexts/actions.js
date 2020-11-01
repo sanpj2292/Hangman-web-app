@@ -1,6 +1,6 @@
 import { initializeDisplayWord } from "./context-util";
 import { GENERATE, RIGHT, WRONG, WIN, LOSS, ALERT, DISMISS_ALERT, RELOAD, TOGGLE_MSG_ALERT, 
-        TOGGLE_GRID_LOADING, SET_PLAYER_GRID_API_REF } from "./action-types";
+        TOGGLE_GRID_LOADING, SET_PLAYER_GRID_API_REF, SELECT_TEAM_PLAYERS } from "./action-types";
 
 const wordGenerationUtil = (actionType, wordMeanPOS) => {
     const { word, meaning, pos } = wordMeanPOS;
@@ -81,4 +81,9 @@ export const toggleMsgAlert = ({message, actionType, open}) => ({
 export const toggleGridLoading = (gridLoading=false) => ({
     type: TOGGLE_GRID_LOADING,
     gridLoading
+});
+
+export const selectTeamPlayers = (team, typeOfPlayers, players) => ({
+    type: SELECT_TEAM_PLAYERS,
+    team, typeOfPlayers, players
 });
