@@ -2,9 +2,10 @@ import moment from "moment";
 
 
 export const columns = [
-    {field: 'player_name', headerName:'Player Name', width: 320, disableClickEventBubbling: true,},
+    {field: 'player_name', headerName:'Player Name', width: 200, disableClickEventBubbling: true,},
     {
-        field: 'dob', width: 140, 
+        field: 'dob',
+        width: 140,
         headerName: 'Date of Birth', 
         type: 'date', 
         disableClickEventBubbling: true,
@@ -17,7 +18,7 @@ export const columns = [
             return 'Not Available';
         }
     },
-    {field: 'batting_hand', headerName:'Batting Skill', disableClickEventBubbling: true,width: 200},
-    {field: 'bowling_skill', headerName:'Bowling Skill', disableClickEventBubbling: true, width: 200},
+    {field: 'batting_hand', headerName:'Batting Skill', disableClickEventBubbling: true, width: 160},
+    {field: 'bowling_skill', headerName:'Bowling Skill', disableClickEventBubbling: true, width: 220},
   ];
   

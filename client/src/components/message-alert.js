@@ -37,7 +37,7 @@ export default function MessageAlert() {
     <div className={classes.root}>
       <Snackbar 
         anchorOrigin={{
-            vertical: vertical ?  vertical:'top', 
+            vertical: vertical ?  vertical:'bottom', 
             horizontal: horizontal ? horizontal:'right'
         }}
         open={open} 

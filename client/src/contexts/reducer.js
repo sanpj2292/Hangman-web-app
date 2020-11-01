@@ -1,7 +1,8 @@
 import { getInitKeysMap } from "./context-util";
 import { GENERATE, WRONG, RIGHT, WIN, LOSS, ALERT, 
         DISMISS_ALERT, RELOAD, TOGGLE_MSG_ALERT,
-        SET_PLAYER_GRID_API_REF } from "./action-types";
+        SET_PLAYER_GRID_API_REF, 
+        TOGGLE_GRID_LOADING} from "./action-types";
 
 export const initialState = {
     keys: getInitKeysMap(),
@@ -26,7 +27,8 @@ export const initialState = {
         message: '',
         open: false,
         position: 'bottom-right'
-    }, 
+    },
+    gridLoading: false,
 }
 const gameReducer = (state, action) => {
     switch (action.type) {
@@ -85,9 +87,15 @@ const gameReducer = (state, action) => {
                 ...state,
                 messageAlert: {
                     open: action.open,
-                    type: action.actionType ? action.actionType:'warning',
-                    message: action.message ? action.message:''
+                    type: action.actionType,
+                    message: action.message
                 }
+            };
+        case TOGGLE_GRID_LOADING:
+            const { gridLoading } = action;
+            return {
+                ...state,
+                gridLoading
             };
         default:
             return state;

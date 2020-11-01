@@ -75,12 +75,19 @@ export function mountWithWordMeanPOS(dispatch, action) {
         });
 };
 
-export async function getPlayers() {
+export async function getPlayers(playerName) {
     try {
-        const resp = await axios.get('/api/league/players');
+        let resp = {}
+        if (!playerName){
+            resp = await axios.post('/api/league/players', {});
+        } else {
+            resp = await axios.post('/api/league/players', {playerName})
+        }
         const {data: players} = resp.data;
-        if(players && players.length > 0)
+        if (players && players.length > 0)
             return players;
+        else if (players && players.length === 0)
+            throw `Players are not available for the filter '${playerName}'`;
         else
             throw 'Something wrong with Request';
     } catch (error) {
