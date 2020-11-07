@@ -18,7 +18,8 @@ const useStyles = makeStyles((theme) => ({
 export default function CheckboxList(props) {
   const classes = useStyles();
 
-  const {rows, columns, apiRef, gridLoading} = props;
+  const {rows, columns, apiRef, gridLoading, onCellClick} = props;
+  console.log('cellClik', onCellClick);
 
   const onSelectionChange = params => {
     // console.log(apiRef);
@@ -33,6 +34,7 @@ export default function CheckboxList(props) {
     <>
       <div className={classes.root}>
         <DataGrid pageSize={20} checkboxSelection
+          onCellClick={onCellClick}
           components={{
             noRowsOverlay: (params) => <GridNoRowsOverlay message='No Rows' />,
             loadingOverlay: (params) => {
@@ -45,7 +47,8 @@ export default function CheckboxList(props) {
           }}
           loading={gridLoading}
           columnBuffer={2}
-          onSelectionChange={onSelectionChange} rows={rows} columns={columns} />
+          onSelectionChange={onSelectionChange} 
+          rows={rows} columns={columns} />
       </div>
     </>
   );

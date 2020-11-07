@@ -43,11 +43,16 @@ export default function League (props) {
 
     const onPlayerTypeChange = (event) => {
         setPlayerType(event.target.value);
+        console.log(apiRef.current.getRowModels())
         if (apiRef.current.getSelectedRows().length > 0) {
             const ids = apiRef.current.getSelectedRows().map(r => r.id);
             apiRef.current.selectRows(ids, false);
         }
     };
+
+    const onCellClick = (cellParams) => {
+        console.log(cellParams);
+    }
 
     const onSelectPlayersClick = e => {
         console.log(apiRef.current);
@@ -85,9 +90,17 @@ export default function League (props) {
         });
     }
     
+    const onTeam1Clear = (e, ind) => {
+        console.log('Team1 Clear click', e);
+    };
+
+    const onTeam2Clear = (e, ind) => {
+        console.log('Team2 Clear click', e);
+    };
+    
     useEffect(() => {
         getPlayerDetails();
-      }, [apiRef.current]);
+    }, [apiRef.current]);
 
     return (
         <>
@@ -133,11 +146,14 @@ export default function League (props) {
                 </div>
                 <div className='row'>
                     <div className='ml-4 col-7'>
-                        <PlayerList apiRef={apiRef} rows={rows} 
+                        <PlayerList apiRef={apiRef} rows={rows} onCellClick={onCellClick}
                             columns={columns} gridLoading={gridLoading} />
                     </div>
                     <div className='col'>
-                        <TeamTabs value={tab} onTabChange={onTabChange} team1={team1} team2={team2} />
+                        <TeamTabs value={tab} onTabChange={onTabChange} team1={team1} team2={team2} 
+                            onTeam1Clear={onTeam1Clear}
+                            onTeam2Clear={onTeam2Clear}
+                        />
                     </div>
                 </div>
             {/* </div> */}

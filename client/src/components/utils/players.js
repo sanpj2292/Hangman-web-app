@@ -2,13 +2,12 @@ import moment from "moment";
 
 
 export const columns = [
-    {field: 'player_name', headerName:'Player Name', width: 200, disableClickEventBubbling: true,},
+    {field: 'player_name', headerName:'Player Name', width: 200,},
     {
         field: 'dob',
         width: 140,
         headerName: 'Date of Birth', 
         type: 'date', 
-        disableClickEventBubbling: true,
         valueGetter: params => {
             const dob = params.getValue('dob');
             if (dob) {
@@ -18,7 +17,7 @@ export const columns = [
             return 'Not Available';
         }
     },
-    {field: 'batting_hand', headerName:'Batting Skill', disableClickEventBubbling: true, width: 160},
-    {field: 'bowling_skill', headerName:'Bowling Skill', disableClickEventBubbling: true, width: 220},
+    {field: 'batting_hand', headerName:'Batting Skill', width: 160},
+    {field: 'bowling_skill', headerName:'Bowling Skill', width: 220},
   ];
   
