@@ -43,20 +43,22 @@ export default function League (props) {
 
     const onPlayerTypeChange = (event) => {
         setPlayerType(event.target.value);
-        console.log(apiRef.current.getRowModels())
         if (apiRef.current.getSelectedRows().length > 0) {
             const ids = apiRef.current.getSelectedRows().map(r => r.id);
             apiRef.current.selectRows(ids, false);
         }
     };
 
-    const onCellClick = (cellParams) => {
-        console.log(cellParams);
-    }
-
     const onSelectPlayersClick = e => {
-        console.log(apiRef.current);
         const teamData = apiRef.current.getSelectedRows().map(row => row.data);
+        const cloneRows = [...rows];
+        const selectedPlayerIds = teamData.map(({ id }) => id);
+        while (selectedPlayerIds.length > 0) {
+            let i = selectedPlayerIds.pop();
+            let ind = cloneRows.findIndex(row => row.id === i);
+            cloneRows.splice(ind, 1);
+        }
+        setRows(cloneRows);
         dispatch(selectTeamPlayers(`team${tab + 1}`, playerType, teamData));
     };
 
@@ -90,17 +92,30 @@ export default function League (props) {
         });
     }
     
-    const onTeam1Clear = (e, ind) => {
-        console.log('Team1 Clear click', e);
+    const onUnlinkPlayerToTeam = (e, player, type) => {
+        const key = type === 'Batsman' ? 'batsmen':'bowlers';
+        const cloneTeam = Object.assign({}, tab === 0 ? team1:team2);
+        const ind = cloneTeam[key].findIndex(t => t.id === player.id);
+        if (ind >= 0) {
+            cloneTeam[key].splice(ind, 1);
+            const cloneRows = [...rows];
+            cloneRows.push(player);
+            dispatch(selectTeamPlayers(`team${tab + 1}`, type, cloneTeam));
+            setRows(cloneRows);
+        }
     };
 
-    const onTeam2Clear = (e, ind) => {
-        console.log('Team2 Clear click', e);
-    };
-    
     useEffect(() => {
         getPlayerDetails();
     }, [apiRef.current]);
+
+    const getPlayerSelRestriction = () => {
+        if (playerType === 'batsmen') {
+            const team = tab === 0 ? team1:team2;
+            return 3 - team[playerType].length;
+        } 
+        return 1;
+    }
 
     return (
         <>
@@ -146,13 +161,13 @@ export default function League (props) {
                 </div>
                 <div className='row'>
                     <div className='ml-4 col-7'>
-                        <PlayerList apiRef={apiRef} rows={rows} onCellClick={onCellClick}
+                        <PlayerList apiRef={apiRef} rows={rows} 
+                            playerSelRestriction={getPlayerSelRestriction()}
                             columns={columns} gridLoading={gridLoading} />
                     </div>
                     <div className='col'>
                         <TeamTabs value={tab} onTabChange={onTabChange} team1={team1} team2={team2} 
-                            onTeam1Clear={onTeam1Clear}
-                            onTeam2Clear={onTeam2Clear}
+                            onUnlinkPlayerToTeam={onUnlinkPlayerToTeam}
                         />
                     </div>
                 </div>

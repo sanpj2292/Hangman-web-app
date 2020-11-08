@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   
 export default function PlayerTabs(props) {
     const classes = useStyles();
-    const {onTabChange, value, team1, team2, onTeam1Clear, onTeam2Clear,...otherProps} = props;
+    const {onTabChange, value, team1, team2, onUnlinkPlayerToTeam,...otherProps} = props;
   
     return (
       <div className={classes.root}>
@@ -58,10 +58,10 @@ export default function PlayerTabs(props) {
             <StyledTab label="Team-2" />
           </StyledTabs>
           <TeamsTabPanel value={value} id='team-1' index={0}>
-            <PlayerDetails team='team-1' batsmen={team1.batsmen} bowlers={team1.bowlers} onClear={onTeam1Clear} />
+            <PlayerDetails team='team-1' batsmen={team1.batsmen} bowlers={team1.bowlers} onClear={onUnlinkPlayerToTeam} />
           </TeamsTabPanel>
           <TeamsTabPanel value={value} id='team-2' index={1}>
-            <PlayerDetails team='team-2' batsmen={team2.batsmen} bowlers={team2.bowlers} onClear={onTeam2Clear} />
+            <PlayerDetails team='team-2' batsmen={team2.batsmen} bowlers={team2.bowlers} onClear={onUnlinkPlayerToTeam} />
           </TeamsTabPanel>
         </div>
       </div>

@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"emmet.includeLanguages": {
+			"javascript": "javascriptreact"
+		},
+		"workbench.preferredDarkColorTheme": "Andromeda Colorizer",
+		"workbench.colorTheme": "Andromeda Colorizer"
+	}
+}

@@ -83,7 +83,7 @@ const PlayerCard = ({ playerIcon, player, onClear, index, pkey: key, playerType 
             />
         </Card>
         <div className='hidden-button'> 
-            <IconButton key={`${key}-icon-button`} className={classes.buttonClass} onClick={e => onClear(e, index)}>
+            <IconButton key={`${key}-icon-button`} className={classes.buttonClass} onClick={e => onClear(e, player, playerType)}>
                 <CloseTwoToneIcon key={`${key}-close-icon`} className={classes.closeIcon} />
             </IconButton>
         </div>

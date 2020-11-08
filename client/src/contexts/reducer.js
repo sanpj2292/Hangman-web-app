@@ -114,7 +114,11 @@ const gameReducer = (state, action) => {
             } else if (team === 'team2') {
                 clone = Object.assign({}, {team2});
             }
-            clone[team][typeOfPlayers] = players;
+            if (typeOfPlayers === 'batsmen' && clone[team][typeOfPlayers].length < 3) {
+                clone[team][typeOfPlayers] = [...clone[team][typeOfPlayers], ...players];
+            } else {
+                clone[team][typeOfPlayers] = players;
+            }
             return {
                 ...state,
                 ...clone

@@ -18,14 +18,13 @@ const useStyles = makeStyles((theme) => ({
 export default function CheckboxList(props) {
   const classes = useStyles();
 
-  const {rows, columns, apiRef, gridLoading, onCellClick} = props;
-  console.log('cellClik', onCellClick);
+  const {rows, columns, apiRef, gridLoading, playerSelRestriction} = props;
 
   const onSelectionChange = params => {
     // console.log(apiRef);
     const {rows} = params;
-    if (rows.length > 3) {
-      rows.splice(0, rows.length - 3);
+    if (rows.length > playerSelRestriction) {
+      rows.splice(0, rows.length - playerSelRestriction);
       apiRef.current.selectRows(rows.map(row => row.id), true, true);
     }
   }
@@ -34,7 +33,6 @@ export default function CheckboxList(props) {
     <>
       <div className={classes.root}>
         <DataGrid pageSize={20} checkboxSelection
-          onCellClick={onCellClick}
           components={{
             noRowsOverlay: (params) => <GridNoRowsOverlay message='No Rows' />,
             loadingOverlay: (params) => {
