@@ -75,13 +75,17 @@ export function mountWithWordMeanPOS(dispatch, action) {
         });
 };
 
-export async function getPlayers(playerName) {
+export async function getPlayers(playerName, selectedIds) {
     try {
-        let resp = {}
-        if (!playerName){
-            resp = await axios.post('/api/league/players', {});
+        let resp = {};
+        const requestBody = {};
+        if (selectedIds && selectedIds.length > 0) {
+            requestBody.selectedIds = selectedIds.map(id => `${id}`);
+        }
+        if (!playerName) {
+            resp = await axios.post('/api/league/players', requestBody);
         } else {
-            resp = await axios.post('/api/league/players', {playerName})
+            resp = await axios.post('/api/league/players', {playerName, ...requestBody});
         }
         const {data: players} = resp.data;
         if (players && players.length > 0)

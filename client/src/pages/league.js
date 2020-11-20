@@ -49,6 +49,22 @@ export default function League (props) {
         }
     };
 
+    const onSaveTeam = e => {
+        let alertData = {open: true, actionType: 'success', message: `Saved Team${tab + 1}`};
+        const team = tab === 0 ? team1:team2;
+        let errMsg = '';
+        if (team.batsmen && team.batsmen.length < 3) {
+            errMsg = `No of Batsmen < 3`;
+        }
+        if (team.bowlers && team.bowlers.length < 1) {
+            errMsg += `${errMsg.length > 0 ? ' and ': ''}No bowler selected`;
+        }
+        if (errMsg.length > 0) {
+            alertData = {open: true, actionType: 'error', message: `Cannot save team${tab+1} as current team has ${errMsg}`};
+        }
+        dispatch(toggleMsgAlert(alertData));
+    };
+
     const onSelectPlayersClick = e => {
         const teamData = apiRef.current.getSelectedRows().map(row => row.data);
         const cloneRows = [...rows];
@@ -64,8 +80,14 @@ export default function League (props) {
 
     const getPlayerDetails = () => {
         dispatch(toggleGridLoading(true));
-        getPlayers(searchPlayerRef.current.value)
-        .then(res => {
+        let playerPromise = {};
+        const alreadySelectedIds = getSelectedIds();
+        if (alreadySelectedIds && alreadySelectedIds.length > 0) {
+            playerPromise = getPlayers(searchPlayerRef.current.value, alreadySelectedIds);
+        } else {
+            playerPromise = getPlayers(searchPlayerRef.current.value);
+        }
+        playerPromise.then(res => {
             counterRef.current.renderCount += 1;
             console.log('no of render**:', counterRef.current.renderCount);
             console.log("apiRef.current**:", apiRef.current);
@@ -117,6 +139,12 @@ export default function League (props) {
         return 1;
     }
 
+    const getSelectedIds = () => {
+        const team1Ids = [...team1.batsmen.map(pl => `${pl.id}`), ...team1.bowlers.map(pl => `${pl.id}`)];
+        const team2Ids = [...team2.batsmen.map(pl => `${pl.id}`), ...team2.bowlers.map(pl => `${pl.id}`)];
+        return [...team1Ids, ...team2Ids];
+    };
+
     return (
         <>
             <MessageAlert />
@@ -156,6 +184,11 @@ export default function League (props) {
                     <div className="pt-2 col-xs-1">
                         <Button variant="contained" color="primary" onClick={onSelectPlayersClick}>
                             Select Players
+                        </Button>
+                    </div>
+                    <div className="col-xs-1 pt-2 ml-auto">
+                        <Button variant='contained' color='primary' onClick={onSaveTeam}>
+                            Save Team
                         </Button>
                     </div>
                 </div>
