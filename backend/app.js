@@ -4,6 +4,9 @@ const path = require('path');
 
 const router = require('./routes/router');
 const { getWordArray } = require('./service/utils');
+const passport = require('passport');
+const session = require('express-session');
+const passportInit = require('./libs/passport-init');
 
 const port = process.env.PORT || 3001;
 const app = express();
@@ -16,6 +19,18 @@ app.use(cors(
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'bin/build')));
+app.use(session({
+    secret: process.env.FUNGAMERS_SESSION_SECRET,
+    proxy: true,
+    // name:'fungamersSession',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 60*1000 }
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passportInit();
+
 
 app.get('/', (req, res) => {
     res.send('We are Live with Express APP');

@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import GoogleButton from "react-google-button";
 
 export const LoginContainer = styled.div`
     background-color: blueviolet;
@@ -91,11 +92,12 @@ export default props => {
     // const { onLogin } = props;
     return (
         <LoginContainer>
-            <Label size="1rem" mtop="0">Username</Label>
+            {/* <Label size="1rem" mtop="0">Username</Label>
             <LoginInput type='text' placeholder='Enter your username' mbot='0.75rem' />
             <Label size="1rem" mtop="1.6rem">Password</Label>
             <LoginInput type='password' placeholder='Enter your password' />
-            <LoginButton onClick={onLogin}>Login</LoginButton>
+            <LoginButton onClick={onLogin}>Login</LoginButton> */}
+            <GoogleButton onClick={onLogin} />
         </LoginContainer>
     );
 };

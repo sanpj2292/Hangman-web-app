@@ -11,3 +11,5 @@ export const RELOAD = 'RELOAD';
 export const TOGGLE_MSG_ALERT = 'TOGGLE_MSG_ALERT';
 export const TOGGLE_GRID_LOADING = 'TOGGLE_GRID_LOADING';
 export const SELECT_TEAM_PLAYERS = 'SELECT_TEAM_PLAYERS';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGOUT = 'LOGOUT';

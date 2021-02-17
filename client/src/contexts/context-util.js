@@ -98,3 +98,16 @@ export async function getPlayers(playerName, selectedIds) {
         throw new Error(error);
     }
 };
+
+export async function login () {
+    try {
+        const resp = await axios.get('/api/auth/login');
+        if (resp.status === 200) {
+            return resp.data;
+        } else {
+            throw new Error(resp.data.message);
+        }
+    } catch (error) {
+        throw new Error(error);
+    }
+}

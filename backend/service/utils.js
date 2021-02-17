@@ -6,6 +6,7 @@ const axios = require('axios');
 const fs = require('fs');
 const eol = require('os').EOL;
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
+const db = require('../db');
 
 const getTextFromSpan = (htmlArray) => htmlArray.map(html => {
     const $ = cheerio.load(html);
@@ -111,13 +112,23 @@ function generateWord(words, minLength) {
     return words[Random.currentNum];
 }
 
-const getGoogleStrategy = (callbackURL) => new GoogleStrategy({
+const getGoogleStrategy = (callbackURL, cb) => new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_KEY,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL,
-}, (accessToken, refreshToken, profile, done) => {
-    console.log('Callback called -- inside passport callback');
-    return done(null, { profile });
+    scope: ['profile', 'email'],
+}, cb ? cb : async (accessToken, refreshToken, profile, done) => {
+    const {displayName: profileName, 
+            email, picture: imageURL, 
+            id: profileId ,provider } = profile;
+    const { isError: isUserCheckErr, result: user } = await db.executeQuery('check-user', profileId);
+    if(!isUserCheckErr && user && user.rows && user.rows.length > 0
+        && user.rows[0].profileId === profileId) {
+        console.log('User is available');
+    } else {
+        await db.executeQuery('insert-user', profileId, profileName, email, provider, imageURL);
+    }
+    return done(null, { profileId, profileName, email, provider, imageURL });
 });
 
 

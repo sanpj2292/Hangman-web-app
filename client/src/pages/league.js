@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 // import styled from "styled-components";
 import { columns } from "../components/utils/players";
-import { getPlayers } from "../contexts/context-util";
+import { getPlayers, login } from "../contexts/context-util";
 import PlayerList from "../components/player-list";
 
 import { AppContext } from "../contexts/context-provider";
-import { toggleMsgAlert, toggleGridLoading, selectTeamPlayers } from "../contexts/actions";
+import { toggleMsgAlert, toggleGridLoading, selectTeamPlayers, loginSuccess } from "../contexts/actions";
 import MessageAlert from '../components/message-alert';
 import TextField from '@material-ui/core/TextField';
 import IconButton from "@material-ui/core/IconButton";
@@ -128,7 +128,20 @@ export default function League (props) {
     };
 
     useEffect(() => {
-        getPlayerDetails();
+        login().then(res => {
+            dispatch(loginSuccess(res.isAuthenticated, {
+                actionType: res.success ? 'success':'warning',
+                message: res.message,
+                open: true,
+            }));
+            getPlayerDetails();
+        }).catch(err => {
+            dispatch(toggleMsgAlert({
+                actionType: 'error',
+                message: err.message,
+                open: true
+            }));
+        });
     }, [apiRef.current]);
 
     const getPlayerSelRestriction = () => {

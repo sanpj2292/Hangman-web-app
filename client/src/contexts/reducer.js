@@ -2,7 +2,7 @@ import { getInitKeysMap } from "./context-util";
 import { GENERATE, WRONG, RIGHT, WIN, LOSS, ALERT, 
         DISMISS_ALERT, RELOAD, TOGGLE_MSG_ALERT,
         SET_PLAYER_GRID_API_REF, SELECT_TEAM_PLAYERS, 
-        TOGGLE_GRID_LOADING} from "./action-types";
+        TOGGLE_GRID_LOADING, LOGIN_SUCCESS, LOGOUT} from "./action-types";
 
 export const initialState = {
     keys: getInitKeysMap(),
@@ -37,6 +37,7 @@ export const initialState = {
         batsmen: [],
         bowlers: []
     },
+    isAuthenticated: false
 }
 const gameReducer = (state, action) => {
     switch (action.type) {
@@ -122,6 +123,18 @@ const gameReducer = (state, action) => {
             return {
                 ...state,
                 ...clone
+            };
+        case LOGOUT:
+        case LOGIN_SUCCESS:
+            const {isAuthenticated} = action;
+            return {
+                ...state,
+                messageAlert: {
+                    open: action.open,
+                    type: action.actionType,
+                    message: action.message
+                },
+                isAuthenticated,
             };
         default:
             return state;
